@@ -1,0 +1,1117 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecting the Future | mRNA Therapeutics for Brain Metastases</title>  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />  <style>
+    :root {
+      --navy: #071b33;
+      --navy-2: #0b2a4a;
+      --blue: #2563eb;
+      --blue-soft: #dbeafe;
+      --teal: #0f766e;
+      --teal-2: #14b8a6;
+      --teal-soft: #ccfbf1;
+      --cyan-soft: #ecfeff;
+      --white: #ffffff;
+      --offwhite: #f8fafc;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --shadow-hover: 0 24px 70px rgba(15, 23, 42, 0.14);
+      --radius: 24px;
+      --radius-lg: 34px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 8% 8%, rgba(20, 184, 166, 0.18), transparent 28%),
+        radial-gradient(circle at 92% 10%, rgba(37, 99, 235, 0.16), transparent 26%),
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 90px 0;
+    }
+
+    .section-header {
+      max-width: 780px;
+      margin: 0 auto 46px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+      border-radius: 99px;
+    }
+
+    h1, h2, h3 {
+      color: var(--navy);
+      letter-spacing: -0.045em;
+      line-height: 1.08;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 6vw, 5.7rem);
+      font-weight: 900;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 850;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      box-shadow: 0 14px 35px rgba(37, 99, 235, 0.22);
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--navy);
+      border-color: var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      transition: 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .icon {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--blue-soft), var(--teal-soft));
+      font-size: 1.55rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .grid-6 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* Navbar */
+    .navbar-wrap {
+      position: sticky;
+      top: 16px;
+      z-index: 50;
+      padding-top: 16px;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 18px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      color: var(--navy);
+      letter-spacing: -0.04em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      color: white;
+      background: linear-gradient(135deg, var(--navy), var(--teal));
+      box-shadow: 0 12px 25px rgba(15, 118, 110, 0.22);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: #475569;
+      font-size: 0.9rem;
+      font-weight: 750;
+    }
+
+    .nav-links a:hover {
+      color: var(--teal);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 110px 0 92px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 9px 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(20, 184, 166, 0.25);
+      background: rgba(236, 254, 255, 0.85);
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+
+    .hero h1 span {
+      display: block;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 830px;
+      margin: 28px auto 36px;
+      font-size: 1.16rem;
+      color: #52647a;
+    }
+
+    .hero-visual {
+      margin: 58px auto 0;
+      max-width: 1040px;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(135deg, rgba(7, 27, 51, 0.94), rgba(11, 42, 74, 0.94)),
+        radial-gradient(circle at center, rgba(20, 184, 166, 0.3), transparent 40%);
+      padding: 34px;
+      box-shadow: 0 30px 90px rgba(7, 27, 51, 0.24);
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: rgba(20, 184, 166, 0.18);
+      right: -120px;
+      top: -140px;
+      filter: blur(5px);
+    }
+
+    .pipeline-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      z-index: 1;
+    }
+
+    .pipeline-node {
+      padding: 20px 14px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+    }
+
+    .pipeline-node strong {
+      display: block;
+      color: white;
+      margin-bottom: 5px;
+    }
+
+    .pipeline-node small {
+      color: rgba(255, 255, 255, 0.72);
+      font-weight: 650;
+    }
+
+    /* Problem */
+    .barrier-tag {
+      display: inline-flex;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--cyan-soft);
+      color: var(--teal);
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Relay */
+    .relay-card {
+      min-height: 260px;
+    }
+
+    .team-number {
+      position: absolute;
+      top: 22px;
+      right: 24px;
+      color: rgba(37, 99, 235, 0.12);
+      font-size: 4.5rem;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.08em;
+    }
+
+    .handoff {
+      margin-top: 34px;
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, #eef8ff, #ecfeff);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .handoff-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .handoff-box {
+      padding: 18px;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid var(--border);
+      font-weight: 850;
+      color: var(--navy);
+    }
+
+    .arrow {
+      color: var(--teal);
+      font-weight: 900;
+      font-size: 1.5rem;
+    }
+
+    /* Stop Go */
+    .stop-go-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .stop-card,
+    .go-card {
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .stop-card {
+      background: linear-gradient(135deg, #fff7ed, #fff1f2);
+    }
+
+    .go-card {
+      background: linear-gradient(135deg, #ecfeff, #eff6ff);
+    }
+
+    .label-large {
+      display: inline-flex;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: white;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    .label-stop {
+      background: #dc2626;
+    }
+
+    .label-go {
+      background: var(--teal);
+    }
+
+    .mechanism {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .phase-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .phase-badge {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: var(--navy);
+      color: white;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    /* Roadmap */
+    .roadmap {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .roadmap-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .feedback-loop {
+      margin-top: 30px;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      box-shadow: 0 22px 60px rgba(7, 27, 51, 0.2);
+    }
+
+    .feedback-loop p {
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    /* Collaboration */
+    .collab {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .partner-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .partner-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .partner-item span {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 14px;
+      background: var(--teal-soft);
+      color: var(--teal);
+      font-weight: 900;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      font: inherit;
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.12);
+    }
+
+    .form-note {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--navy);
+      color: white;
+      padding: 56px 0 34px;
+      margin-top: 70px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr 0.7fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    footer p,
+    footer a,
+    footer small {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    footer h3 {
+      color: white;
+      margin-bottom: 14px;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 9px;
+    }
+
+    .qr-placeholder {
+      width: 140px;
+      height: 140px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: white;
+      color: var(--navy);
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 900;
+      padding: 12px;
+    }
+
+    .copyright {
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .grid-4,
+      .grid-3,
+      .grid-6,
+      .mechanism,
+      .roadmap,
+      .collab,
+      .stop-go-wrap,
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .pipeline-row {
+        grid-template-columns: 1fr;
+      }
+
+      .handoff-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .navbar {
+        align-items: flex-start;
+        border-radius: 26px;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-6,
+      .mechanism,
+      .roadmap,
+      .collab,
+      .stop-go-wrap,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 70px 0 60px;
+      }
+
+      .hero-visual,
+      .handoff,
+      .stop-card,
+      .go-card {
+        padding: 22px;
+        border-radius: 26px;
+      }
+
+      .copyright {
+        flex-direction: column;
+      }
+    }
+  </style></head><body>
+  <header class="navbar-wrap">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a class="brand" href="#top">
+        <span class="brand-mark">mRNA</span>
+        <span>Digital-Experimental Pipeline</span>
+      </a><div class="nav-links">
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#collaboration">Collaborate</a>
+  </div>
+</nav>
+
+  </header>  <main id="top">
+    <section class="hero container">
+      <div class="hero-badge">Biomedical research concept · mRNA therapeutics · Brain metastases</div>
+      <h1>
+        Architecting the Future:
+        <span>An Integrated Digital-Experimental Pipeline for mRNA Therapeutics Targeting Brain Metastases</span>
+      </h1>
+      <p class="hero-subtitle">
+        A translational research blueprint combining AI-guided antigen design, mRNA-LNP engineering, PNA-based suppression logic, wet-lab validation, and iterative team science to address the biological complexity of metastatic disease in the brain.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="[PDF link]">Download Blueprint</a>
+        <a class="btn btn-secondary" href="mailto:[your.email]">Contact</a>
+      </div><div class="hero-visual" aria-label="Digital experimental pipeline overview">
+    <div class="pipeline-row">
+      <div class="pipeline-node">
+        <strong>Patient Data</strong>
+        <small>Genomics · pathology · clinical context</small>
+      </div>
+      <div class="pipeline-node">
+        <strong>AI Design Core</strong>
+        <small>Neoantigen ranking · construct selection</small>
+      </div>
+      <div class="pipeline-node">
+        <strong>mRNA-LNP Build</strong>
+        <small>Therapeutic payload · delivery strategy</small>
+      </div>
+      <div class="pipeline-node">
+        <strong>Wet-Lab Validation</strong>
+        <small>Expression · potency · immune response</small>
+      </div>
+      <div class="pipeline-node">
+        <strong>Learning Loop</strong>
+        <small>Data returns to improve the model</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="problem">
+  <div class="section-header">
+    <div class="eyebrow">The problem</div>
+    <h2>Brain metastases create a uniquely difficult therapeutic environment.</h2>
+    <p>
+      Effective mRNA therapeutics must overcome physical, molecular, and immunological barriers that limit drug delivery and durable anti-tumor response.
+    </p>
+  </div>
+
+  <div class="grid-3">
+    <article class="card">
+      <div class="icon">🧠</div>
+      <span class="barrier-tag">Barrier 01</span>
+      <h3>Blood-Brain Barrier</h3>
+      <p>
+        The BBB restricts therapeutic access and complicates systemic delivery, requiring delivery designs that balance penetration, specificity, and safety.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🧬</div>
+      <span class="barrier-tag">Barrier 02</span>
+      <h3>Tumor Heterogeneity</h3>
+      <p>
+        Brain metastases vary across patients, lesions, and clonal populations, demanding adaptive target selection rather than one-size-fits-all design.
+      </p>
+    </article>
+
+    <article class="card">
+      <div class="icon">❄️</div>
+      <span class="barrier-tag">Barrier 03</span>
+      <h3>Cold Immune Niche</h3>
+      <p>
+        The brain metastatic microenvironment can suppress immune activation, reducing the effectiveness of conventional immunotherapeutic strategies.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="section container" id="solution">
+  <div class="section-header">
+    <div class="eyebrow">The solution</div>
+    <h2>A four-team Relay Race Protocol.</h2>
+    <p>
+      The project is structured as a coordinated handoff system where every team creates a validated output for the next stage.
+    </p>
+  </div>
+
+  <div class="grid-4">
+    <article class="card relay-card">
+      <div class="team-number">1</div>
+      <div class="icon">📊</div>
+      <h3>Team Data</h3>
+      <p>
+        Curates patient-derived datasets, sequencing files, clinical metadata, tumor annotations, and quality-controlled input bundles.
+      </p>
+    </article>
+
+    <article class="card relay-card">
+      <div class="team-number">2</div>
+      <div class="icon">🤖</div>
+      <h3>Team AI</h3>
+      <p>
+        Runs neoantigen ranking, construct optimization, immune-context prediction, and digital dossier generation.
+      </p>
+    </article>
+
+    <article class="card relay-card">
+      <div class="team-number">3</div>
+      <div class="icon">🧪</div>
+      <h3>Team Wet-Lab</h3>
+      <p>
+        Validates expression, delivery, antigen presentation, cytotoxicity, immune activation, and experimental reproducibility.
+      </p>
+    </article>
+
+    <article class="card relay-card">
+      <div class="team-number">4</div>
+      <div class="icon">🎯</div>
+      <h3>Team Lead</h3>
+      <p>
+        Coordinates milestones, integrates outputs, manages decision gates, and converts results into a fundable roadmap.
+      </p>
+    </article>
+  </div>
+
+  <div class="handoff">
+    <div class="handoff-flow" aria-label="Relay handoff diagram">
+      <div class="handoff-box">Data Bundle</div>
+      <div class="arrow">→</div>
+      <div class="handoff-box">Digital Dossier</div>
+      <div class="arrow">→</div>
+      <div class="handoff-box">Validation Report</div>
+      <div class="arrow">→</div>
+      <div class="handoff-box">Integrated Dashboard</div>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="mechanism">
+  <div class="section-header">
+    <div class="eyebrow">Stop & Go conjugate</div>
+    <h2>A dual-function therapeutic logic: suppress what protects the tumor, express what activates immunity.</h2>
+    <p>
+      The conceptual platform combines a STOP module and a GO module to create an integrated therapeutic sequence.
+    </p>
+  </div>
+
+  <div class="stop-go-wrap">
+    <article class="stop-card">
+      <span class="label-large label-stop">Stop = PNA</span>
+      <h3>Peptide Nucleic Acid Suppression Logic</h3>
+      <p>
+        The PNA arm is proposed as a selective inhibitory element designed to interfere with tumor-supportive or immune-evasive transcripts relevant to brain metastatic survival.
+      </p>
+    </article>
+
+    <article class="go-card">
+      <span class="label-large label-go">Go = mRNA</span>
+      <h3>mRNA Immune Activation Logic</h3>
+      <p>
+        The mRNA arm is designed to express selected antigens, immune modulators, or therapeutic payloads that promote recognition and anti-tumor response.
+      </p>
+    </article>
+  </div>
+
+  <div class="mechanism">
+    <article class="phase-card">
+      <div class="phase-badge">1</div>
+      <h3>Target Recognition</h3>
+      <p>
+        Patient and tumor data define candidate neoantigens, immune-evasion pathways, and biologically relevant intervention points.
+      </p>
+    </article>
+
+    <article class="phase-card">
+      <div class="phase-badge">2</div>
+      <h3>Dual Payload Delivery</h3>
+      <p>
+        A delivery strategy transports the therapeutic construct toward brain metastatic tissue while prioritizing stability and safety.
+      </p>
+    </article>
+
+    <article class="phase-card">
+      <div class="phase-badge">3</div>
+      <h3>Immune Reprogramming</h3>
+      <p>
+        PNA-mediated suppression and mRNA-mediated expression work together to shift the lesion from immune-cold toward immune-visible.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="section container" id="roadmap">
+  <div class="section-header">
+    <div class="eyebrow">Validation roadmap</div>
+    <h2>Three phases, one continuous feedback loop.</h2>
+    <p>
+      The roadmap moves from computational design to experimental validation and back into model improvement.
+    </p>
+  </div>
+
+  <div class="roadmap">
+    <article class="roadmap-card">
+      <div class="phase-badge">I</div>
+      <h3>Digital Feasibility</h3>
+      <p>
+        Build the data schema, define candidate targets, create computational scoring pipelines, and generate the first therapeutic design dossier.
+      </p>
+    </article>
+
+    <article class="roadmap-card">
+      <div class="phase-badge">II</div>
+      <h3>In Vitro Validation</h3>
+      <p>
+        Test expression, knockdown or suppression logic, immune activation markers, cell viability, and reproducibility in relevant model systems.
+      </p>
+    </article>
+
+    <article class="roadmap-card">
+      <div class="phase-badge">III</div>
+      <h3>Translational Readiness</h3>
+      <p>
+        Integrate results into improved design rules, prioritize lead constructs, and prepare for funding, partnership, and advanced preclinical work.
+      </p>
+    </article>
+  </div>
+
+  <div class="feedback-loop">
+    <h3>Experimental Results → Model Refinement → Improved Construct Design</h3>
+    <p>
+      Every validation result becomes training intelligence for the next sprint of the pipeline.
+    </p>
+  </div>
+</section>
+
+<section class="section container" id="innovations">
+  <div class="section-header">
+    <div class="eyebrow">Key innovations</div>
+    <h2>Six integrated advances in one research architecture.</h2>
+  </div>
+
+  <div class="grid-6">
+    <article class="card">
+      <div class="icon">🧠</div>
+      <h3>Brain-Metastasis Focus</h3>
+      <p>Disease-specific design around BBB limits, neural microenvironment constraints, and metastatic immune escape.</p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🧬</div>
+      <h3>Personalized Neoantigen Logic</h3>
+      <p>Computational ranking connects patient-specific tumor data to mRNA construct selection.</p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🔬</div>
+      <h3>Digital-Experimental Loop</h3>
+      <p>Wet-lab outcomes are not endpoints; they feed directly back into model refinement.</p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🧪</div>
+      <h3>Stop & Go Conjugate</h3>
+      <p>Combines suppressive and expressive therapeutic logic in one conceptual framework.</p>
+    </article>
+
+    <article class="card">
+      <div class="icon">📈</div>
+      <h3>Validation Dashboard</h3>
+      <p>Tracks design decisions, assay outputs, QC gates, and go/no-go milestones.</p>
+    </article>
+
+    <article class="card">
+      <div class="icon">🤝</div>
+      <h3>Team Science Protocol</h3>
+      <p>A structured relay model reduces fragmentation between computational, biological, and strategic workstreams.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section container" id="collaboration">
+  <div class="collab">
+    <div>
+      <div class="eyebrow">Collaboration</div>
+      <h2>Seeking partners, supervisors, and funders.</h2>
+      <p>
+        This project is designed for collaboration across oncology, immunology, mRNA delivery, computational biology, translational medicine, and venture-backed therapeutic development.
+      </p>
+
+      <div class="partner-list">
+        <div class="partner-item">
+          <span>01</span>
+          <div>
+            <h3>Academic Supervisors</h3>
+            <p>For PhD supervision, experimental design guidance, and translational research mentorship.</p>
+          </div>
+        </div>
+
+        <div class="partner-item">
+          <span>02</span>
+          <div>
+            <h3>Research Partners</h3>
+            <p>For wet-lab assays, organoid models, immunology expertise, and mRNA-LNP formulation support.</p>
+          </div>
+        </div>
+
+        <div class="partner-item">
+          <span>03</span>
+          <div>
+            <h3>Funders & Accelerators</h3>
+            <p>For early feasibility funding, translational grants, venture studio collaboration, and preclinical development support.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Contact the project lead</h3>
+      <p style="margin: 10px 0 22px;">
+        Use this placeholder form structure for a static landing page, or connect it later to Formspree, Netlify Forms, Google Forms, or your backend.
+      </p>
+
+      <form action="mailto:[your.email]" method="post" enctype="text/plain">
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your email" required />
+        <select name="interest" required>
+          <option value="">I am interested as a...</option>
+          <option value="supervisor">Supervisor / Academic mentor</option>
+          <option value="partner">Research partner</option>
+          <option value="funder">Funder / Accelerator</option>
+          <option value="other">Other collaborator</option>
+        </select>
+        <textarea name="message" placeholder="Tell me how you would like to collaborate"></textarea>
+        <button class="btn btn-primary" type="submit">Send Message</button>
+        <p class="form-note">Direct email: [your.email]</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+  </main>  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h3>Architecting the Future</h3>
+        <p>
+          An integrated digital-experimental pipeline for mRNA therapeutics targeting brain metastases.
+        </p>
+        <p style="margin-top: 14px;">Project lead: [Your Name]</p>
+      </div><div>
+    <h3>Links</h3>
+    <div class="footer-links">
+      <a href="[PDF link]">Download Blueprint</a>
+      <a href="[GitHub link]">GitHub Repository</a>
+      <a href="mailto:[tetteynissi399@gmail.com]">Contact</a>
+    </div>
+  </div>
+
+  <div>
+    <h3>Sections</h3>
+    <div class="footer-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#mechanism">Stop & Go</a>
+      <a href="#roadmap">Roadmap</a>
+    </div>
+  </div>
+
+  <div>
+    <h3>QR Code</h3>
+    <div class="qr-placeholder">[QR code image]</div>
+  </div>
+</div>
+
+<div class="container copyright">
+  <small>© 2026 [C.O.M.E.T LABS]. All rights reserved.</small>
+  <small>Biomedical research concept · For academic and partnership discussion.</small>
+</div>
+
+  </footer>
+</body>
+  </html>

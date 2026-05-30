@@ -1,112 +1,543 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Architecting the Future | mRNA Therapeutics for Brain Metastases</title>  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />  <style>
-    :root {
-      --navy: #071b33;
-      --navy-2: #0b2a4a;
-      --blue: #2563eb;
-      --blue-soft: #dbeafe;
-      --teal: #0f766e;
-      --teal-2: #14b8a6;
-      --teal-soft: #ccfbf1;
-      --cyan-soft: #ecfeff;
-      --white: #ffffff;
-      --offwhite: #f8fafc;
-      --text: #1e293b;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
-      --shadow-hover: 0 24px 70px rgba(15, 23, 42, 0.14);
-      --radius: 24px;
-      --radius-lg: 34px;
-    }
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blueprint | mRNA-LNP-PNA Pipeline for Brain Metastases</title>
+  <meta name="description" content="Integrated digital-experimental pipeline for AI-driven neoantigen discovery and mRNA therapeutics targeting brain metastases.">
+  <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    html {
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #1a2a3a;
+      line-height: 1.5;
       scroll-behavior: smooth;
     }
 
-    body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--white);
-      color: var(--text);
-      line-height: 1.65;
-      overflow-x: hidden;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background:
-        radial-gradient(circle at 8% 8%, rgba(20, 184, 166, 0.18), transparent 28%),
-        radial-gradient(circle at 92% 10%, rgba(37, 99, 235, 0.16), transparent 26%),
-        linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    /* Navigation */
+    .navbar {
+      background: white;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.95);
     }
 
-    a {
-      color: inherit;
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      max-width: 1280px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1B365D;
       text-decoration: none;
     }
 
-    img {
-      max-width: 100%;
-      display: block;
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    .container {
-      width: min(1180px, calc(100% - 40px));
+    .nav-links a {
+      text-decoration: none;
+      color: #1f3a4b;
+      font-weight: 500;
+      transition: color 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a:hover {
+      color: #008080;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background-color: #1B365D;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: background 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: #0f2a4a;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: #1B365D;
+      border: 1.5px solid #1B365D;
+      padding: 9px 23px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background-color: #1B365D;
+      color: white;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #eef5fc 0%, #ffffff 100%);
+      padding: 60px 0;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .badge {
+      background: #e0f0f0;
+      color: #006666;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin: 40px 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+      border: 1px solid #eef2f5;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    /* Form */
+    .contact-form {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      max-width: 600px;
       margin: 0 auto;
     }
 
-    .section {
-      padding: 90px 0;
+    .form-group {
+      margin-bottom: 20px;
     }
 
-    .section-header {
-      max-width: 780px;
-      margin: 0 auto 46px;
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #1B365D;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      transition: border 0.2s;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #008080;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 12px;
+      display: none;
+    }
+
+    .form-status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .form-status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    /* Sections */
+    .section-dark {
+      background: #F8F9FA;
+      padding: 60px 0;
+    }
+
+    .section-light {
+      background: white;
+      padding: 60px 0;
+    }
+
+    .section-blue {
+      background: #eef5fc;
+      padding: 60px 0;
+    }
+
+    h2 {
+      color: #1B365D;
+      margin-bottom: 24px;
+      font-size: 1.8rem;
+    }
+
+    h3 {
+      color: #1f4a6e;
+      margin-bottom: 16px;
+      font-size: 1.3rem;
+    }
+
+    /* Timeline */
+    .timeline-phase {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin: 40px 0;
+    }
+
+    .phase {
+      flex: 1;
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      border-left: 5px solid #008080;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #0f2a3f;
+      color: #cbd5e1;
+      padding: 48px 0 24px;
+      margin-top: 60px;
+    }
+
+    .footer a {
+      color: #9ab3c8;
+      text-decoration: none;
+    }
+
+    /* Figure placeholder */
+    .figure-placeholder {
+      background: #f0f4f8;
+      border-radius: 16px;
+      padding: 30px;
       text-align: center;
+      margin: 30px 0;
+      border: 1px dashed #1B365D;
+      color: #1B365D;
+      font-style: italic;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      color: var(--teal);
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 12px;
+        font-size: 0.8rem;
+      }
+      .timeline-phase {
+        flex-direction: column;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
     }
+  </style>
+</head>
+<body>
 
-    .eyebrow::before,
-    .eyebrow::after {
-      content: "";
-      width: 22px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--teal), var(--blue));
-      border-radius: 99px;
-    }
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo">🧬 STOPGO Bio | Brain Metastasis Pipeline</a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#technology">Technology</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
 
-    h1, h2, h3 {
-      color: var(--navy);
-      letter-spacing: -0.045em;
-      line-height: 1.08;
-    }
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="badge">📄 AI Platform for Pharma R&D</div>
+        <h1 style="font-size: 2.8rem; margin: 20px 0 16px;">Accelerating mRNA Therapeutics for Brain Metastases</h1>
+        <p style="font-size: 1.2rem; color: #2c5a6e; margin-bottom: 24px;">AI-driven neoantigen discovery platform with built-in equity screening. Accelerate vaccine development from months to weeks.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="#contact" class="btn-primary">🤝 Partner with Us</a>
+          <a href="#technology" class="btn-secondary">Explore Technology</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    h1 {
+  <!-- Problem -->
+  <section id="problem" class="section-light">
+    <div class="container">
+      <h2>🧠 The Challenge</h2>
+      <p>Brain metastases affect 20-40% of advanced cancer patients. Current neoantigen prediction tools are:</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="icon">⚠️</div>
+          <h3>Inaccurate</h3>
+          <p>High false-positive rates (20-30%) waste R&D resources and delay development.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🧬</div>
+          <h3>Not Brain-Specific</h3>
+          <p>Trained on peripheral cancers; fail to capture brain metastasis biology.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🌍</div>
+          <h3>Biased</h3>
+          <p>Eurocentric training data → poor performance for African and Asian populations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution -->
+  <section id="solution" class="section-blue">
+    <div class="container">
+      <h2>🚀 Our Solution</h2>
+      <p><strong>AI-powered neoantigen prediction platform for pharma R&D</strong></p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="icon">🤖</div>
+          <h3>Ensemble AI Model</h3>
+          <p>23-feature vector combining binding affinity, clonality, expression, and brain-specific markers. Outperforms NetMHCpan by 15-20% AUC.</p>
+        </div>
+        <div class="card">
+          <div class="icon">⚖️</div>
+          <h3>Built-in Equity Screening</h3>
+          <p>CPV/pPVI metrics ensure unbiased target selection across all ancestral populations – addressing growing regulatory requirements.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🔄</div>
+          <h3>Closed-Loop Learning</h3>
+          <p>Validation data retrains models, continuously improving accuracy (+19% AUC over 4 sprints).</p>
+        </div>
+      </div>
+      <div class="figure-placeholder">
+        📊 Ensemble AI Architecture: XGBoost + Random Forest + Neural Network → Composite Immunogenicity Score (CIS 0-1)
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology -->
+  <section id="technology" class="section-light">
+    <div class="container">
+      <h2>⚙️ Technical Specifications</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>23 Features</h3>
+          <p>Binding affinity (NetMHCpan, MHCflurry) · Clonality (CCF) · Expression (TPM) · Brain specificity · Safety filters</p>
+        </div>
+        <div class="card">
+          <h3>Ensemble Architecture</h3>
+          <p>XGBoost + Random Forest + Neural Network → Logistic Regression Meta-Learner → CIS Score (0-1)</p>
+        </div>
+        <div class="card">
+          <h3>Equity Metrics</h3>
+          <p>CPV (Cumulative Population Coverage) · pPVI (Immunogenicity-weighted) · Equity Scorecard with mitigation pathways</p>
+        </div>
+      </div>
+      <div class="figure-placeholder">
+        📊 Equity Scorecard: CPV by population (EUR 72%, AFR 48% before mitigation → 58% after)
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section id="roadmap" class="section-blue">
+    <div class="container">
+      <h2>📅 Validation Roadmap</h2>
+      <div class="timeline-phase">
+        <div class="phase">
+          <strong>🔬 Phase I (4-6 wk)</strong><br>
+          In silico benchmark (TCGA + BrainMetShare) → AUC-ROC >0.75
+        </div>
+        <div class="phase">
+          <strong>🧫 Phase II (8-12 wk)</strong><br>
+          pMHC binding, ELISpot, cytotoxicity → >50% top-10 validated
+        </div>
+        <div class="phase">
+          <strong>🐁 Phase III (12-24 wk)</strong><br>
+          PDO + PDX models → survival benefit >50% (p<0.01)
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 20px;"><strong>Closed-loop learning:</strong> Validation data retrains AI → +19% AUC over 4 sprints</p>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section id="contact" class="section-light">
+    <div class="container">
+      <h2 style="text-align: center;">🤝 Partner with Us</h2>
+      <p style="text-align: center; margin-bottom: 40px;">Seeking pharma partners, collaborators, and investors</p>
+      
+      <div class="contact-form">
+        <!-- IMPORTANT: Replace YOUR_FORM_ENDPOINT with your actual Formspree endpoint -->
+        <form action="https://formspree.io/f/YOUR_FORM_ENDPOINT" method="POST" id="contactForm">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="affiliation">Affiliation / Organization</label>
+            <input type="text" id="affiliation" name="affiliation">
+          </div>
+          <div class="form-group">
+            <label for="interest">I am interested in *</label>
+            <select id="interest" name="interest" required>
+              <option value="">Select an option</option>
+              <option value="Partnership">Partnership / Collaboration</option>
+              <option value="Supervision">Supervision / Academic Advice</option>
+              <option value="Funding">Funding / Investment</option>
+              <option value="Licensing">Licensing the AI Platform</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" placeholder="Tell us about your interest in the project..." required></textarea>
+          </div>
+          <input type="hidden" name="_subject" value="New Contact from STOPGO Bio Website">
+          <input type="hidden" name="_replyto" value="email">
+          <div style="text-align: center;">
+            <button type="submit" class="btn-primary" style="width: 100%;">Send Message →</button>
+          </div>
+          <div id="formStatus" class="form-status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+        <div>
+          <strong>🧬 STOPGO Bio</strong><br>
+          AI Platform for Neoantigen Discovery
+        </div>
+        <div>
+          <a href="#">GitHub</a> · <a href="#">Contact</a> · 
+          <a href="mailto:drsherlockholmes22b@gmail.com">Email Us</a>
+        </div>
+      </div>
+      <hr style="margin: 32px 0 24px; border-color: #2c4f6e;">
+      <p style="font-size: 0.85rem;">© 2025 STOPGO Bio. All rights reserved.<br>Blueprint thesis completed; seeking supervision, partnerships, and funding.</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+  // Optional: Simple form handling with status display
+  const form = document.getElementById('contactForm');
+  const statusDiv = document.getElementById('formStatus');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusDiv.style.display = 'block';
+      statusDiv.className = 'form-status';
+      statusDiv.textContent = 'Sending...';
+      
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        
+        if (response.ok) {
+          statusDiv.className = 'form-status success';
+          statusDiv.textContent = '✓ Message sent successfully! We will respond within 48 hours.';
+          form.reset();
+        } else {
+          statusDiv.className = 'form-status error';
+          statusDiv.textContent = '❌ Error sending message. Please email us directly at drsherlockholmes22b@gmail.com';
+        }
+      } catch (error) {
+        statusDiv.className = 'form-status error';
+        statusDiv.textContent = '❌ Network error. Please email us directly at drsherlockholmes22b@gmail.com';
+      }
+      
+      setTimeout(() => {
+        statusDiv.style.display = 'none';
+      }, 5000);
+    });
+  }
+</script>
+
+</body>
+</html    h1 {
       font-size: clamp(2.6rem, 6vw, 5.7rem);
       font-weight: 900;
     }

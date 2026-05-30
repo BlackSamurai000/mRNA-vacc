@@ -1,566 +1,136 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blueprint | mRNA-LNP-PNA Pipeline for Brain Metastases</title>
-  <meta name="description" content="Integrated digital-experimental pipeline for AI-driven neoantigen discovery and mRNA therapeutics targeting brain metastases.">
-  <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STOPGO Bio | mRNA-LNP-PNA Pipeline for Brain Metastases</title>
+  <meta name="description" content="STOPGO Bio: an integrated digital-experimental pipeline for AI-guided neoantigen discovery and mRNA-LNP-PNA therapeutics targeting brain metastases." />  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />  <style>
+    :root {
+      --navy: #071b33;
+      --navy-2: #0b2a4a;
+      --blue: #2563eb;
+      --blue-2: #1d4ed8;
+      --teal: #0f766e;
+      --teal-2: #14b8a6;
+      --cyan: #06b6d4;
+      --green: #16a34a;
+      --red: #dc2626;
+      --amber: #f59e0b;
+      --bg: #f8fbff;
+      --card: rgba(255,255,255,0.88);
+      --white: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 20px 55px rgba(15,23,42,0.08);
+      --shadow-strong: 0 34px 90px rgba(7,27,51,0.22);
+      --radius: 24px;
+      --radius-lg: 36px;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background-color: #ffffff;
-      color: #1a2a3a;
-      line-height: 1.5;
+    html {
       scroll-behavior: smooth;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 5% 5%, rgba(20,184,166,0.18), transparent 30%),
+        radial-gradient(circle at 92% 8%, rgba(37,99,235,0.16), transparent 28%),
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 48%, #ffffff 100%);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* Navigation */
-    .navbar {
-      background: white;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(8px);
-      background: rgba(255,255,255,0.95);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(15,118,110,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,118,110,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, black, transparent 72%);
     }
 
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 24px;
-      max-width: 1280px;
-      margin: 0 auto;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #1B365D;
+    a {
+      color: inherit;
       text-decoration: none;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #1f3a4b;
-      font-weight: 500;
-      transition: color 0.2s;
-      font-size: 0.9rem;
-    }
-
-    .nav-links a:hover {
-      color: #008080;
-    }
-
-    /* Buttons */
-    .btn-primary {
-      background-color: #1B365D;
-      color: white;
-      padding: 10px 24px;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-block;
-      transition: background 0.2s;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-primary:hover {
-      background-color: #0f2a4a;
-    }
-
-    .btn-secondary {
-      background-color: transparent;
-      color: #1B365D;
-      border: 1.5px solid #1B365D;
-      padding: 9px 23px;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.2s;
-      display: inline-block;
-    }
-
-    .btn-secondary:hover {
-      background-color: #1B365D;
-      color: white;
-    }
-
-    /* Hero */
-    .hero {
-      background: linear-gradient(135deg, #eef5fc 0%, #ffffff 100%);
-      padding: 60px 0;
-    }
-
-    .hero-content {
-      max-width: 800px;
-    }
-
-    .badge {
-      background: #e0f0f0;
-      color: #006666;
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: inline-block;
-      width: fit-content;
-    }
-
-    /* Cards */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-      margin: 40px 0;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
-      border: 1px solid #eef2f5;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    .icon {
-      font-size: 32px;
-      margin-bottom: 16px;
-    }
-
-    /* Form */
-    .contact-form {
-      background: white;
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
+    img {
+      max-width: 100%;
       display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #1B365D;
     }
 
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      font-family: inherit;
-      font-size: 14px;
-      transition: border 0.2s;
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
     }
 
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      outline: none;
-      border-color: #008080;
+    .section {
+      padding: 88px 0;
     }
 
-    .form-group textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .form-status {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 12px;
-      display: none;
-    }
-
-    .form-status.success {
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
-
-    .form-status.error {
-      background: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
-
-    /* Sections */
-    .section-dark {
-      background: #F8F9FA;
-      padding: 60px 0;
-    }
-
-    .section-light {
-      background: white;
-      padding: 60px 0;
-    }
-
-    .section-blue {
-      background: #eef5fc;
-      padding: 60px 0;
-    }
-
-    h2 {
-      color: #1B365D;
-      margin-bottom: 24px;
-      font-size: 1.8rem;
-    }
-
-    h3 {
-      color: #1f4a6e;
-      margin-bottom: 16px;
-      font-size: 1.3rem;
-    }
-
-    /* Timeline */
-    .timeline-phase {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      margin: 40px 0;
-    }
-
-    .phase {
-      flex: 1;
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      border-left: 5px solid #008080;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    /* Footer */
-    .footer {
-      background-color: #0f2a3f;
-      color: #cbd5e1;
-      padding: 48px 0 24px;
-      margin-top: 60px;
-    }
-
-    .footer a {
-      color: #9ab3c8;
-      text-decoration: none;
-    }
-
-    /* Figure placeholder */
-    .figure-placeholder {
-      background: #f0f4f8;
-      border-radius: 16px;
-      padding: 30px;
+    .section-head {
+      max-width: 800px;
+      margin: 0 auto 46px;
       text-align: center;
-      margin: 30px 0;
-      border: 1px dashed #1B365D;
-      color: #1B365D;
-      font-style: italic;
     }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        gap: 12px;
-        font-size: 0.8rem;
-      }
-      .timeline-phase {
-        flex-direction: column;
-      }
-      h2 {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="#" class="logo">🧬 STOPGO Bio | Brain Metastasis Pipeline</a>
-    <div class="nav-links">
-      <a href="#problem">Problem</a>
-      <a href="#solution">Solution</a>
-      <a href="#technology">Technology</a>
-      <a href="#roadmap">Roadmap</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<main>
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="badge">📄 AI Platform for Pharma R&D</div>
-        <h1 style="font-size: 2.8rem; margin: 20px 0 16px;">Accelerating mRNA Therapeutics for Brain Metastases</h1>
-        <p style="font-size: 1.2rem; color: #2c5a6e; margin-bottom: 24px;">AI-driven neoantigen discovery platform with built-in equity screening. Accelerate vaccine development from months to weeks.</p>
-        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-          <a href="#contact" class="btn-primary">🤝 Partner with Us</a>
-          <a href="#technology" class="btn-secondary">Explore Technology</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Problem -->
-  <section id="problem" class="section-light">
-    <div class="container">
-      <h2>🧠 The Challenge</h2>
-      <p>Brain metastases affect 20-40% of advanced cancer patients. Current neoantigen prediction tools are:</p>
-      <div class="card-grid">
-        <div class="card">
-          <div class="icon">⚠️</div>
-          <h3>Inaccurate</h3>
-          <p>High false-positive rates (20-30%) waste R&D resources and delay development.</p>
-        </div>
-        <div class="card">
-          <div class="icon">🧬</div>
-          <h3>Not Brain-Specific</h3>
-          <p>Trained on peripheral cancers; fail to capture brain metastasis biology.</p>
-        </div>
-        <div class="card">
-          <div class="icon">🌍</div>
-          <h3>Biased</h3>
-          <p>Eurocentric training data → poor performance for African and Asian populations.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Solution -->
-  <section id="solution" class="section-blue">
-    <div class="container">
-      <h2>🚀 Our Solution</h2>
-      <p><strong>AI-powered neoantigen prediction platform for pharma R&D</strong></p>
-      <div class="card-grid">
-        <div class="card">
-          <div class="icon">🤖</div>
-          <h3>Ensemble AI Model</h3>
-          <p>23-feature vector combining binding affinity, clonality, expression, and brain-specific markers. Outperforms NetMHCpan by 15-20% AUC.</p>
-        </div>
-        <div class="card">
-          <div class="icon">⚖️</div>
-          <h3>Built-in Equity Screening</h3>
-          <p>CPV/pPVI metrics ensure unbiased target selection across all ancestral populations – addressing growing regulatory requirements.</p>
-        </div>
-        <div class="card">
-          <div class="icon">🔄</div>
-          <h3>Closed-Loop Learning</h3>
-          <p>Validation data retrains models, continuously improving accuracy (+19% AUC over 4 sprints).</p>
-        </div>
-      </div>
-      <div class="figure-placeholder">
-        📊 Ensemble AI Architecture: XGBoost + Random Forest + Neural Network → Composite Immunogenicity Score (CIS 0-1)
-      </div>
-    </div>
-  </section>
-
-  <!-- Technology -->
-  <section id="technology" class="section-light">
-    <div class="container">
-      <h2>⚙️ Technical Specifications</h2>
-      <div class="card-grid">
-        <div class="card">
-          <h3>23 Features</h3>
-          <p>Binding affinity (NetMHCpan, MHCflurry) · Clonality (CCF) · Expression (TPM) · Brain specificity · Safety filters</p>
-        </div>
-        <div class="card">
-          <h3>Ensemble Architecture</h3>
-          <p>XGBoost + Random Forest + Neural Network → Logistic Regression Meta-Learner → CIS Score (0-1)</p>
-        </div>
-        <div class="card">
-          <h3>Equity Metrics</h3>
-          <p>CPV (Cumulative Population Coverage) · pPVI (Immunogenicity-weighted) · Equity Scorecard with mitigation pathways</p>
-        </div>
-      </div>
-      <div class="figure-placeholder">
-        📊 Equity Scorecard: CPV by population (EUR 72%, AFR 48% before mitigation → 58% after)
-      </div>
-    </div>
-  </section>
-
-  <!-- Roadmap -->
-  <section id="roadmap" class="section-blue">
-    <div class="container">
-      <h2>📅 Validation Roadmap</h2>
-      <div class="timeline-phase">
-        <div class="phase">
-          <strong>🔬 Phase I (4-6 wk)</strong><br>
-          In silico benchmark (TCGA + BrainMetShare) → AUC-ROC >0.75
-        </div>
-        <div class="phase">
-          <strong>🧫 Phase II (8-12 wk)</strong><br>
-          pMHC binding, ELISpot, cytotoxicity → >50% top-10 validated
-        </div>
-        <div class="phase">
-          <strong>🐁 Phase III (12-24 wk)</strong><br>
-          PDO + PDX models → survival benefit >50% (p<0.01)
-        </div>
-      </div>
-      <p style="text-align: center; margin-top: 20px;"><strong>Closed-loop learning:</strong> Validation data retrains AI → +19% AUC over 4 sprints</p>
-    </div>
-  </section>
-
-  <!-- Contact Form -->
-  <section id="contact" class="section-light">
-    <div class="container">
-      <h2 style="text-align: center;">🤝 Partner with Us</h2>
-      <p style="text-align: center; margin-bottom: 40px;">Seeking pharma partners, collaborators, and investors</p>
-      
-      <div class="contact-form">
-        <!-- IMPORTANT: Replace YOUR_FORM_ENDPOINT with your actual Formspree endpoint -->
-        <form action="https://formspree.io/f/YOUR_FORM_ENDPOINT" method="POST" id="contactForm">
-          <div class="form-group">
-            <label for="name">Full Name *</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address *</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="affiliation">Affiliation / Organization</label>
-            <input type="text" id="affiliation" name="affiliation">
-          </div>
-          <div class="form-group">
-            <label for="interest">I am interested in *</label>
-            <select id="interest" name="interest" required>
-              <option value="">Select an option</option>
-              <option value="Partnership">Partnership / Collaboration</option>
-              <option value="Supervision">Supervision / Academic Advice</option>
-              <option value="Funding">Funding / Investment</option>
-              <option value="Licensing">Licensing the AI Platform</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="message">Message *</label>
-            <textarea id="message" name="message" placeholder="Tell us about your interest in the project..." required></textarea>
-          </div>
-          <input type="hidden" name="_subject" value="New Contact from STOPGO Bio Website">
-          <input type="hidden" name="_replyto" value="email">
-          <div style="text-align: center;">
-            <button type="submit" class="btn-primary" style="width: 100%;">Send Message →</button>
-          </div>
-          <div id="formStatus" class="form-status"></div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
-        <div>
-          <strong>🧬 STOPGO Bio</strong><br>
-          AI Platform for Neoantigen Discovery
-        </div>
-        <div>
-          <a href="#">GitHub</a> · <a href="#">Contact</a> · 
-          <a href="mailto:drsherlockholmes22b@gmail.com">Email Us</a>
-        </div>
-      </div>
-      <hr style="margin: 32px 0 24px; border-color: #2c4f6e;">
-      <p style="font-size: 0.85rem;">© 2025 STOPGO Bio. All rights reserved.<br>Blueprint thesis completed; seeking supervision, partnerships, and funding.</p>
-    </div>
-  </footer>
-</main>
-
-<script>
-  // Optional: Simple form handling with status display
-  const form = document.getElementById('contactForm');
-  const statusDiv = document.getElementById('formStatus');
-
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      statusDiv.style.display = 'block';
-      statusDiv.className = 'form-status';
-      statusDiv.textContent = 'Sending...';
-      
-      try {
-        const formData = new FormData(form);
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-        
-        if (response.ok) {
-          statusDiv.className = 'form-status success';
-          statusDiv.textContent = '✓ Message sent successfully! We will respond within 48 hours.';
-          form.reset();
-        } else {
-          statusDiv.className = 'form-status error';
-          statusDiv.textContent = '❌ Error sending message. Please email us directly at drsherlockholmes22b@gmail.com';
-        }
-      } catch (error) {
-        statusDiv.className = 'form-status error';
-        statusDiv.textContent = '❌ Network error. Please email us directly at drsherlockholmes22b@gmail.com';
-      }
-      
-      setTimeout(() => {
-        statusDiv.style.display = 'none';
-      }, 5000);
-    });
-  }
-</script>
-
-</body>
-</html    h1 {
-      font-size: clamp(2.6rem, 6vw, 5.7rem);
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      color: var(--teal);
+      font-size: 0.76rem;
       font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+      border-radius: 999px;
+    }
+
+    h1, h2, h3 {
+      color: var(--navy);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 6vw, 5.8rem);
+      font-weight: 950;
     }
 
     h2 {
       font-size: clamp(2rem, 4vw, 3.25rem);
-      font-weight: 850;
+      font-weight: 900;
     }
 
     h3 {
-      font-size: 1.25rem;
-      font-weight: 800;
+      font-size: 1.24rem;
+      font-weight: 850;
     }
 
     p {
       color: var(--muted);
-    }
-
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 14px;
     }
 
     .btn {
@@ -568,56 +138,66 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      padding: 14px 24px;
       border-radius: 999px;
-      font-weight: 800;
-      transition: 0.25s ease;
+      padding: 14px 22px;
+      font-weight: 850;
       border: 1px solid transparent;
+      transition: 220ms ease;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.96rem;
     }
 
-    .btn-primary {
-      color: white;
-      background: linear-gradient(135deg, var(--blue), var(--teal));
-      box-shadow: 0 14px 35px rgba(37, 99, 235, 0.22);
-    }
-
-    .btn-primary:hover,
-    .btn-secondary:hover {
+    .btn:hover {
       transform: translateY(-3px);
     }
 
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      color: white;
+      box-shadow: 0 18px 40px rgba(37,99,235,0.22);
+    }
+
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.82);
+      background: rgba(255,255,255,0.78);
       color: var(--navy);
-      border-color: var(--border);
+      border-color: rgba(226,232,240,0.95);
       box-shadow: var(--shadow);
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: var(--shadow);
-      transition: 0.25s ease;
       position: relative;
       overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid rgba(226,232,240,0.85);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      transition: 240ms ease;
+      backdrop-filter: blur(14px);
     }
 
     .card:hover {
       transform: translateY(-7px);
-      box-shadow: var(--shadow-hover);
+      box-shadow: 0 26px 70px rgba(15,23,42,0.13);
+      background: white;
     }
 
     .icon {
-      width: 56px;
-      height: 56px;
+      width: 58px;
+      height: 58px;
       display: grid;
       place-items: center;
-      border-radius: 18px;
+      border-radius: 20px;
       margin-bottom: 20px;
-      background: linear-gradient(135deg, var(--blue-soft), var(--teal-soft));
+      background: linear-gradient(135deg, #dbeafe, #ccfbf1);
       font-size: 1.55rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
     }
 
     .grid-3 {
@@ -641,48 +221,50 @@
     /* Navbar */
     .navbar-wrap {
       position: sticky;
-      top: 16px;
-      z-index: 50;
-      padding-top: 16px;
+      top: 14px;
+      z-index: 100;
+      padding-top: 14px;
     }
 
     .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 20px;
       padding: 14px 18px;
-      border: 1px solid rgba(226, 232, 240, 0.9);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(18px);
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(226,232,240,0.9);
       box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 900;
+      font-weight: 950;
       color: var(--navy);
       letter-spacing: -0.04em;
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       display: grid;
       place-items: center;
+      flex: 0 0 auto;
       border-radius: 16px;
       color: white;
       background: linear-gradient(135deg, var(--navy), var(--teal));
-      box-shadow: 0 12px 25px rgba(15, 118, 110, 0.22);
+      box-shadow: 0 14px 28px rgba(15,118,110,0.24);
+      font-size: 1.25rem;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 22px;
       color: #475569;
       font-size: 0.9rem;
       font-weight: 750;
@@ -694,29 +276,30 @@
 
     /* Hero */
     .hero {
-      padding: 110px 0 92px;
-      text-align: center;
+      padding: 92px 0 70px;
     }
 
-    .hero-badge {
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.03fr 0.97fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       margin-bottom: 24px;
-      padding: 9px 15px;
       border-radius: 999px;
-      border: 1px solid rgba(20, 184, 166, 0.25);
-      background: rgba(236, 254, 255, 0.85);
+      padding: 9px 15px;
+      border: 1px solid rgba(20,184,166,0.28);
+      background: rgba(236,254,255,0.86);
       color: var(--teal);
       font-size: 0.78rem;
       font-weight: 900;
       letter-spacing: 0.11em;
       text-transform: uppercase;
-    }
-
-    .hero h1 {
-      max-width: 1050px;
-      margin: 0 auto;
     }
 
     .hero h1 span {
@@ -727,100 +310,189 @@
       color: transparent;
     }
 
-    .hero-subtitle {
-      max-width: 830px;
-      margin: 28px auto 36px;
-      font-size: 1.16rem;
+    .hero-lead {
+      max-width: 700px;
+      margin: 24px 0 30px;
+      font-size: 1.12rem;
       color: #52647a;
     }
 
-    .hero-visual {
-      margin: 58px auto 0;
-      max-width: 1040px;
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--border);
+      color: #475569;
+      font-size: 0.86rem;
+      font-weight: 750;
+      box-shadow: 0 8px 20px rgba(15,23,42,0.05);
+    }
+
+    .hero-panel {
+      position: relative;
       border-radius: var(--radius-lg);
+      padding: 28px;
       background:
-        linear-gradient(135deg, rgba(7, 27, 51, 0.94), rgba(11, 42, 74, 0.94)),
-        radial-gradient(circle at center, rgba(20, 184, 166, 0.3), transparent 40%);
-      padding: 34px;
-      box-shadow: 0 30px 90px rgba(7, 27, 51, 0.24);
+        linear-gradient(135deg, rgba(7,27,51,0.96), rgba(11,42,74,0.96)),
+        radial-gradient(circle at top right, rgba(20,184,166,0.35), transparent 42%);
+      box-shadow: var(--shadow-strong);
       color: white;
       overflow: hidden;
-      position: relative;
     }
 
-    .hero-visual::before {
+    .hero-panel::before {
       content: "";
       position: absolute;
-      width: 360px;
-      height: 360px;
+      width: 380px;
+      height: 380px;
       border-radius: 50%;
-      background: rgba(20, 184, 166, 0.18);
-      right: -120px;
-      top: -140px;
-      filter: blur(5px);
+      right: -150px;
+      top: -150px;
+      background: rgba(20,184,166,0.18);
+      filter: blur(4px);
     }
 
-    .pipeline-row {
+    .panel-content {
       position: relative;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
       z-index: 1;
     }
 
-    .pipeline-node {
-      padding: 20px 14px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.09);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+    .mini-title {
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .pipeline-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .pipeline-step {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 15px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.095);
+      border: 1px solid rgba(255,255,255,0.14);
       backdrop-filter: blur(12px);
     }
 
-    .pipeline-node strong {
-      display: block;
+    .pipeline-step span:first-child {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: rgba(255,255,255,0.15);
+      font-weight: 900;
       color: white;
-      margin-bottom: 5px;
     }
 
-    .pipeline-node small {
-      color: rgba(255, 255, 255, 0.72);
+    .pipeline-step strong {
+      display: block;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .pipeline-step small {
+      color: rgba(255,255,255,0.72);
       font-weight: 650;
+    }
+
+    .arrow-pill {
+      color: var(--teal-2);
+      font-weight: 900;
+    }
+
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 42px;
+    }
+
+    .stat {
+      border-radius: 24px;
+      background: white;
+      padding: 22px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--navy);
+      letter-spacing: -0.06em;
+      margin-bottom: 8px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
     }
 
     /* Problem */
     .barrier-tag {
       display: inline-flex;
-      margin-bottom: 14px;
-      border-radius: 999px;
+      margin-bottom: 12px;
       padding: 6px 10px;
-      background: var(--cyan-soft);
+      border-radius: 999px;
+      background: #ecfeff;
       color: var(--teal);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
-    /* Relay */
-    .relay-card {
-      min-height: 260px;
+    .muted-list {
+      margin-top: 16px;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      color: #52647a;
+      font-size: 0.94rem;
+      font-weight: 650;
     }
 
-    .team-number {
-      position: absolute;
-      top: 22px;
-      right: 24px;
-      color: rgba(37, 99, 235, 0.12);
-      font-size: 4.5rem;
-      line-height: 1;
+    .muted-list li {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+    }
+
+    .muted-list li::before {
+      content: "•";
+      color: var(--teal);
       font-weight: 900;
-      letter-spacing: -0.08em;
     }
 
-    .handoff {
+    /* Solution */
+    .handoff-diagram {
       margin-top: 34px;
-      padding: 28px;
       border-radius: var(--radius-lg);
+      padding: 30px;
       background: linear-gradient(135deg, #eef8ff, #ecfeff);
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
@@ -839,122 +511,166 @@
       border-radius: 20px;
       background: white;
       border: 1px solid var(--border);
-      font-weight: 850;
       color: var(--navy);
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.05);
     }
 
     .arrow {
       color: var(--teal);
-      font-weight: 900;
       font-size: 1.5rem;
-    }
-
-    /* Stop Go */
-    .stop-go-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 28px;
-    }
-
-    .stop-card,
-    .go-card {
-      border-radius: var(--radius-lg);
-      padding: 34px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-
-    .stop-card {
-      background: linear-gradient(135deg, #fff7ed, #fff1f2);
-    }
-
-    .go-card {
-      background: linear-gradient(135deg, #ecfeff, #eff6ff);
-    }
-
-    .label-large {
-      display: inline-flex;
-      margin-bottom: 16px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: white;
       font-weight: 900;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
     }
 
-    .label-stop {
-      background: #dc2626;
+    .team-number {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      color: rgba(37,99,235,0.12);
+      font-size: 4.4rem;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: -0.08em;
     }
 
-    .label-go {
-      background: var(--teal);
-    }
-
-    .mechanism {
+    /* Technology */
+    .tech-panel {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .dark-card {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--navy), var(--navy-2));
+      color: white;
+      padding: 34px;
+      box-shadow: var(--shadow-strong);
+    }
+
+    .dark-card h2,
+    .dark-card h3 {
+      color: white;
+    }
+
+    .dark-card p {
+      color: rgba(255,255,255,0.76);
+    }
+
+    .feature-list {
+      margin-top: 22px;
+      display: grid;
+      gap: 14px;
+      list-style: none;
+    }
+
+    .feature-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 13px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      font-weight: 650;
+    }
+
+    .feature-list span {
+      color: var(--teal-2);
+      font-weight: 900;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
     }
 
-    .phase-card {
+    .module-card {
+      border-radius: 22px;
       background: white;
       border: 1px solid var(--border);
-      border-radius: var(--radius);
       padding: 24px;
       box-shadow: var(--shadow);
     }
 
-    .phase-badge {
+    .module-card .label {
       display: inline-flex;
-      width: 42px;
-      height: 42px;
-      align-items: center;
-      justify-content: center;
-      border-radius: 14px;
-      background: var(--navy);
-      color: white;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.74rem;
       font-weight: 900;
-      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .label-stop {
+      background: #fee2e2;
+      color: var(--red);
+    }
+
+    .label-go {
+      background: #ccfbf1;
+      color: var(--teal);
+    }
+
+    .label-ai {
+      background: #dbeafe;
+      color: var(--blue);
+    }
+
+    .label-equity {
+      background: #fef3c7;
+      color: #b45309;
     }
 
     /* Roadmap */
     .roadmap {
-      position: relative;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
     }
 
-    .roadmap-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: var(--shadow);
-    }
-
-    .feedback-loop {
-      margin-top: 30px;
-      padding: 24px;
-      border-radius: var(--radius-lg);
+    .phase-badge {
+      display: inline-flex;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
       background: var(--navy);
       color: white;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .loop-banner {
+      margin-top: 30px;
+      padding: 26px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--navy), var(--teal));
+      color: white;
       text-align: center;
-      box-shadow: 0 22px 60px rgba(7, 27, 51, 0.2);
+      box-shadow: var(--shadow-strong);
     }
 
-    .feedback-loop p {
-      color: rgba(255, 255, 255, 0.76);
+    .loop-banner h3 {
+      color: white;
+      margin-bottom: 8px;
     }
 
-    /* Collaboration */
-    .collab {
+    .loop-banner p {
+      color: rgba(255,255,255,0.78);
+    }
+
+    /* Contact */
+    .contact-grid {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
-      gap: 30px;
+      gap: 32px;
       align-items: start;
     }
 
@@ -970,8 +686,8 @@
       align-items: flex-start;
       padding: 18px;
       border-radius: 20px;
-      border: 1px solid var(--border);
       background: white;
+      border: 1px solid var(--border);
       box-shadow: var(--shadow);
     }
 
@@ -980,29 +696,51 @@
       height: 38px;
       display: grid;
       place-items: center;
-      flex: 0 0 auto;
       border-radius: 14px;
-      background: var(--teal-soft);
+      background: #ccfbf1;
       color: var(--teal);
-      font-weight: 900;
+      font-weight: 950;
+      flex: 0 0 auto;
     }
 
-    form {
+    .contact-form {
+      border-radius: var(--radius-lg);
+      background: white;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+
+    .form-row {
       display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 14px;
     }
 
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--navy);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
     input,
-    textarea,
-    select {
+    select,
+    textarea {
       width: 100%;
-      padding: 15px 16px;
+      padding: 14px 15px;
+      border-radius: 15px;
       border: 1px solid var(--border);
-      border-radius: 16px;
+      background: #fff;
       font: inherit;
-      background: #ffffff;
       color: var(--text);
       outline: none;
+      transition: 180ms ease;
     }
 
     textarea {
@@ -1011,36 +749,31 @@
     }
 
     input:focus,
-    textarea:focus,
-    select:focus {
+    select:focus,
+    textarea:focus {
       border-color: var(--teal);
-      box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.12);
+      box-shadow: 0 0 0 4px rgba(20,184,166,0.12);
     }
 
     .form-note {
-      font-size: 0.88rem;
+      margin-top: 12px;
+      font-size: 0.86rem;
       color: var(--muted);
+      text-align: center;
     }
 
     /* Footer */
     footer {
+      margin-top: 70px;
+      padding: 54px 0 30px;
       background: var(--navy);
       color: white;
-      padding: 56px 0 34px;
-      margin-top: 70px;
     }
 
     .footer-grid {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr 0.8fr 0.7fr;
       gap: 30px;
-      align-items: start;
-    }
-
-    footer p,
-    footer a,
-    footer small {
-      color: rgba(255, 255, 255, 0.72);
     }
 
     footer h3 {
@@ -1048,12 +781,18 @@
       margin-bottom: 14px;
     }
 
+    footer p,
+    footer a,
+    footer small {
+      color: rgba(255,255,255,0.72);
+    }
+
     .footer-links {
       display: grid;
       gap: 9px;
     }
 
-    .qr-placeholder {
+    .qr {
       width: 140px;
       height: 140px;
       display: grid;
@@ -1068,29 +807,29 @@
     }
 
     .copyright {
-      margin-top: 34px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
       display: flex;
       justify-content: space-between;
-      gap: 18px;
       flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.12);
     }
 
     @media (max-width: 980px) {
+      .hero-grid,
+      .tech-panel,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
       .grid-4,
       .grid-3,
       .grid-6,
-      .mechanism,
+      .stats-strip,
       .roadmap,
-      .collab,
-      .stop-go-wrap,
       .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .pipeline-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .handoff-flow {
@@ -1108,7 +847,7 @@
       }
 
       .section {
-        padding: 64px 0;
+        padding: 62px 0;
       }
 
       .navbar {
@@ -1120,508 +859,70 @@
       .nav-links {
         width: 100%;
         flex-wrap: wrap;
-        gap: 14px;
+        gap: 13px;
+      }
+
+      .hero {
+        padding: 62px 0 50px;
       }
 
       .grid-4,
       .grid-3,
       .grid-6,
-      .mechanism,
+      .grid-2,
+      .stats-strip,
       .roadmap,
-      .collab,
-      .stop-go-wrap,
-      .footer-grid {
+      .footer-grid,
+      .module-grid,
+      .form-row {
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        padding: 70px 0 60px;
-      }
-
-      .hero-visual,
-      .handoff,
-      .stop-card,
-      .go-card {
-        padding: 22px;
+      .hero-panel,
+      .handoff-diagram,
+      .dark-card,
+      .contact-form {
         border-radius: 26px;
-      }
-
-      .copyright {
-        flex-direction: column;
+        padding: 22px;
       }
     }
   </style></head><body>
   <header class="navbar-wrap">
     <nav class="navbar container" aria-label="Main navigation">
-      <a class="brand" href="#top">
-        <span class="brand-mark">mRNA</span>
-        <span>Digital-Experimental Pipeline</span>
+      <a href="#top" class="brand">
+        <span class="brand-mark">🧬</span>
+        <span>STOPGO Bio</span>
       </a><div class="nav-links">
     <a href="#problem">Problem</a>
-    <a href="#solution">Solution</a>
-    <a href="#mechanism">Mechanism</a>
+    <a href="#solution">Pipeline</a>
+    <a href="#technology">Technology</a>
     <a href="#roadmap">Roadmap</a>
-    <a href="#collaboration">Collaborate</a>
+    <a href="#contact">Contact</a>
   </div>
 </nav>
 
   </header>  <main id="top">
-    <section class="hero container">
-      <div class="hero-badge">Biomedical research concept · mRNA therapeutics · Brain metastases</div>
-      <h1>
-        Architecting the Future:
-        <span>An Integrated Digital-Experimental Pipeline for mRNA Therapeutics Targeting Brain Metastases</span>
-      </h1>
-      <p class="hero-subtitle">
-        A translational research blueprint combining AI-guided antigen design, mRNA-LNP engineering, PNA-based suppression logic, wet-lab validation, and iterative team science to address the biological complexity of metastatic disease in the brain.
-      </p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="[PDF link]">Download Blueprint</a>
-        <a class="btn btn-secondary" href="mailto:[your.email]">Contact</a>
-      </div><div class="hero-visual" aria-label="Digital experimental pipeline overview">
-    <div class="pipeline-row">
-      <div class="pipeline-node">
-        <strong>Patient Data</strong>
-        <small>Genomics · pathology · clinical context</small>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">AI · mRNA-LNP · PNA · Brain Metastases</div>
+          <h1>
+            Architecting an mRNA therapeutic pipeline
+            <span>for brain metastases.</span>
+          </h1>
+          <p class="hero-lead">
+            STOPGO Bio is a biomedical research concept integrating AI-guided neoantigen discovery, brain-metastasis biology, mRNA-LNP delivery, PNA-based suppression logic, wet-lab validation, and closed-loop learning.
+          </p><div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">🤝 Partner / Collaborate</a>
+        <a class="btn btn-secondary" href="#technology">Explore Technology</a>
       </div>
-      <div class="pipeline-node">
-        <strong>AI Design Core</strong>
-        <small>Neoantigen ranking · construct selection</small>
-      </div>
-      <div class="pipeline-node">
-        <strong>mRNA-LNP Build</strong>
-        <small>Therapeutic payload · delivery strategy</small>
-      </div>
-      <div class="pipeline-node">
-        <strong>Wet-Lab Validation</strong>
-        <small>Expression · potency · immune response</small>
-      </div>
-      <div class="pipeline-node">
-        <strong>Learning Loop</strong>
-        <small>Data returns to improve the model</small>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="section container" id="problem">
-  <div class="section-header">
-    <div class="eyebrow">The problem</div>
-    <h2>Brain metastases create a uniquely difficult therapeutic environment.</h2>
-    <p>
-      Effective mRNA therapeutics must overcome physical, molecular, and immunological barriers that limit drug delivery and durable anti-tumor response.
-    </p>
-  </div>
-
-  <div class="grid-3">
-    <article class="card">
-      <div class="icon">🧠</div>
-      <span class="barrier-tag">Barrier 01</span>
-      <h3>Blood-Brain Barrier</h3>
-      <p>
-        The BBB restricts therapeutic access and complicates systemic delivery, requiring delivery designs that balance penetration, specificity, and safety.
-      </p>
-    </article>
-
-    <article class="card">
-      <div class="icon">🧬</div>
-      <span class="barrier-tag">Barrier 02</span>
-      <h3>Tumor Heterogeneity</h3>
-      <p>
-        Brain metastases vary across patients, lesions, and clonal populations, demanding adaptive target selection rather than one-size-fits-all design.
-      </p>
-    </article>
-
-    <article class="card">
-      <div class="icon">❄️</div>
-      <span class="barrier-tag">Barrier 03</span>
-      <h3>Cold Immune Niche</h3>
-      <p>
-        The brain metastatic microenvironment can suppress immune activation, reducing the effectiveness of conventional immunotherapeutic strategies.
-      </p>
-    </article>
-  </div>
-</section>
-
-<section class="section container" id="solution">
-  <div class="section-header">
-    <div class="eyebrow">The solution</div>
-    <h2>A four-team Relay Race Protocol.</h2>
-    <p>
-      The project is structured as a coordinated handoff system where every team creates a validated output for the next stage.
-    </p>
-  </div>
-
-  <div class="grid-4">
-    <article class="card relay-card">
-      <div class="team-number">1</div>
-      <div class="icon">📊</div>
-      <h3>Team Data</h3>
-      <p>
-        Curates patient-derived datasets, sequencing files, clinical metadata, tumor annotations, and quality-controlled input bundles.
-      </p>
-    </article>
-
-    <article class="card relay-card">
-      <div class="team-number">2</div>
-      <div class="icon">🤖</div>
-      <h3>Team AI</h3>
-      <p>
-        Runs neoantigen ranking, construct optimization, immune-context prediction, and digital dossier generation.
-      </p>
-    </article>
-
-    <article class="card relay-card">
-      <div class="team-number">3</div>
-      <div class="icon">🧪</div>
-      <h3>Team Wet-Lab</h3>
-      <p>
-        Validates expression, delivery, antigen presentation, cytotoxicity, immune activation, and experimental reproducibility.
-      </p>
-    </article>
-
-    <article class="card relay-card">
-      <div class="team-number">4</div>
-      <div class="icon">🎯</div>
-      <h3>Team Lead</h3>
-      <p>
-        Coordinates milestones, integrates outputs, manages decision gates, and converts results into a fundable roadmap.
-      </p>
-    </article>
-  </div>
-
-  <div class="handoff">
-    <div class="handoff-flow" aria-label="Relay handoff diagram">
-      <div class="handoff-box">Data Bundle</div>
-      <div class="arrow">→</div>
-      <div class="handoff-box">Digital Dossier</div>
-      <div class="arrow">→</div>
-      <div class="handoff-box">Validation Report</div>
-      <div class="arrow">→</div>
-      <div class="handoff-box">Integrated Dashboard</div>
-    </div>
-  </div>
-</section>
-
-<section class="section container" id="mechanism">
-  <div class="section-header">
-    <div class="eyebrow">Stop & Go conjugate</div>
-    <h2>A dual-function therapeutic logic: suppress what protects the tumor, express what activates immunity.</h2>
-    <p>
-      The conceptual platform combines a STOP module and a GO module to create an integrated therapeutic sequence.
-    </p>
-  </div>
-
-  <div class="stop-go-wrap">
-    <article class="stop-card">
-      <span class="label-large label-stop">Stop = PNA</span>
-      <h3>Peptide Nucleic Acid Suppression Logic</h3>
-      <p>
-        The PNA arm is proposed as a selective inhibitory element designed to interfere with tumor-supportive or immune-evasive transcripts relevant to brain metastatic survival.
-      </p>
-    </article>
-
-    <article class="go-card">
-      <span class="label-large label-go">Go = mRNA</span>
-      <h3>mRNA Immune Activation Logic</h3>
-      <p>
-        The mRNA arm is designed to express selected antigens, immune modulators, or therapeutic payloads that promote recognition and anti-tumor response.
-      </p>
-    </article>
-  </div>
-
-  <div class="mechanism">
-    <article class="phase-card">
-      <div class="phase-badge">1</div>
-      <h3>Target Recognition</h3>
-      <p>
-        Patient and tumor data define candidate neoantigens, immune-evasion pathways, and biologically relevant intervention points.
-      </p>
-    </article>
-
-    <article class="phase-card">
-      <div class="phase-badge">2</div>
-      <h3>Dual Payload Delivery</h3>
-      <p>
-        A delivery strategy transports the therapeutic construct toward brain metastatic tissue while prioritizing stability and safety.
-      </p>
-    </article>
-
-    <article class="phase-card">
-      <div class="phase-badge">3</div>
-      <h3>Immune Reprogramming</h3>
-      <p>
-        PNA-mediated suppression and mRNA-mediated expression work together to shift the lesion from immune-cold toward immune-visible.
-      </p>
-    </article>
-  </div>
-</section>
-
-<section class="section container" id="roadmap">
-  <div class="section-header">
-    <div class="eyebrow">Validation roadmap</div>
-    <h2>Three phases, one continuous feedback loop.</h2>
-    <p>
-      The roadmap moves from computational design to experimental validation and back into model improvement.
-    </p>
-  </div>
-
-  <div class="roadmap">
-    <article class="roadmap-card">
-      <div class="phase-badge">I</div>
-      <h3>Digital Feasibility</h3>
-      <p>
-        Build the data schema, define candidate targets, create computational scoring pipelines, and generate the first therapeutic design dossier.
-      </p>
-    </article>
-
-    <article class="roadmap-card">
-      <div class="phase-badge">II</div>
-      <h3>In Vitro Validation</h3>
-      <p>
-        Test expression, knockdown or suppression logic, immune activation markers, cell viability, and reproducibility in relevant model systems.
-      </p>
-    </article>
-
-    <article class="roadmap-card">
-      <div class="phase-badge">III</div>
-      <h3>Translational Readiness</h3>
-      <p>
-        Integrate results into improved design rules, prioritize lead constructs, and prepare for funding, partnership, and advanced preclinical work.
-      </p>
-    </article>
-  </div>
-
-  <div class="feedback-loop">
-    <h3>Experimental Results → Model Refinement → Improved Construct Design</h3>
-    <p>
-      Every validation result becomes training intelligence for the next sprint of the pipeline.
-    </p>
-  </div>
-</section>
-
-<section class="section container" id="innovations">
-  <div class="section-header">
-    <div class="eyebrow">Key innovations</div>
-    <h2>Six integrated advances in one research architecture.</h2>
-  </div>
-
-  <div class="grid-6">
-    <article class="card">
-      <div class="icon">🧠</div>
-      <h3>Brain-Metastasis Focus</h3>
-      <p>Disease-specific design around BBB limits, neural microenvironment constraints, and metastatic immune escape.</p>
-    </article>
-
-    <article class="card">
-      <div class="icon">🧬</div>
-      <h3>Personalized Neoantigen Logic</h3>
-      <p>Computational ranking connects patient-specific tumor data to mRNA construct selection.</p>
-    </article>
-
-    <article class="card">
-      <div class="icon">🔬</div>
-      <h3>Digital-Experimental Loop</h3>
-      <p>Wet-lab outcomes are not endpoints; they feed directly back into model refinement.</p>
-    </article>
-
-    <article class="card">
-      <div class="icon">🧪</div>
-      <h3>Stop & Go Conjugate</h3>
-      <p>Combines suppressive and expressive therapeutic logic in one conceptual framework.</p>
-    </article>
-
-    <article class="card">
-      <div class="icon">📈</div>
-      <h3>Validation Dashboard</h3>
-      <p>Tracks design decisions, assay outputs, QC gates, and go/no-go milestones.</p>
-    </article>
-
-    <article class="card">
-      <div class="icon">🤝</div>
-      <h3>Team Science Protocol</h3>
-      <p>A structured relay model reduces fragmentation between computational, biological, and strategic workstreams.</p>
-    </article>
-  </div>
-</section>
-
-<section class="section container" id="collaboration">
-  <div class="collab">
-    <div>
-      <div class="eyebrow">Collaboration</div>
-      <h2>Seeking partners, supervisors, and funders.</h2>
-      <p>
-        This project is designed for collaboration across oncology, immunology, mRNA delivery, computational biology, translational medicine, and venture-backed therapeutic development.
-      </p>
-
-      <div class="partner-list">
-        <div class="partner-item">
-          <span>01</span>
-          <div>
-            <h3>Academic Supervisors</h3>
-            <p>For PhD supervision, experimental design guidance, and translational research mentorship.</p>
-          </div>
-        </div>
-
-        <div class="partner-item">
-          <span>02</span>
-          <div>
-            <h3>Research Partners</h3>
-            <p>For wet-lab assays, organoid models, immunology expertise, and mRNA-LNP formulation support.</p>
-          </div>
-        </div>
-
-        <div class="partner-item">
-          <span>03</span>
-          <div>
-            <h3>Funders & Accelerators</h3>
-            <p>For early feasibility funding, translational grants, venture studio collaboration, and preclinical development support.</p>
-          </div>
-        </div>
+      <div class="hero-chips">
+        <span class="chip">🧠 BBB-aware strategy</span>
+        <span class="chip">🧬 Neoantigen ranking</span>
+        <span class="chip">🧪 Wet-lab feedback loop</span>
+        <span class="chip">🌍 Equity screening</span>
       </div>
     </div>
 
-    <div class="card">
-      <h3>Contact the project lead</h3>
-      <p style="margin: 10px 0 22px;">
-        <form
-action="https://formsubmit.co/drsherlockholmes22b@gmail.com"
-method="POST"
->
-
-<input
-type="hidden"
-name="_subject"
-value="New mRNA Brain Metastases Collaboration Inquiry"
-/>
-
-<input
-type="hidden"
-name="_captcha"
-value="false"
-/>
-
-<input
-type="hidden"
-name="_next"
-value="./index.html#collaboration"
-/>
-
-<input
-type="text"
-name="name"
-placeholder="Your name"
-required
-/>
-
-<input
-type="email"
-name="email"
-placeholder="Your email"
-required
-/>
-
-<select
-name="interest"
-required
->
-<option value="">
-I am interested as a...
-</option>
-
-<option value="Supervisor">
-Supervisor / Academic mentor
-</option>
-
-<option value="Research Partner">
-Research partner
-</option>
-
-<option value="Funder">
-Funder / Accelerator
-</option>
-
-<option value="Other">
-Other collaborator
-</option>
-
-</select>
-
-<textarea
-name="message"
-placeholder="Tell me how you would like to collaborate"
-required
-></textarea>
-
-<button
-class="btn btn-primary"
-type="submit"
->
-Send Collaboration Request
-</button>
-
-<p class="form-note">
-Messages are delivered directly to:
-<br>
-<strong>
-drsherlockholmes22b@gmail.com
-</strong>
-</p>
-
-        </form>
-        <input type="text" name="name" placeholder="Your name" required />
-        <input type="email" name="email" placeholder="Your email" required />
-        <select name="interest" required>
-          <option value="">I am interested as a...</option>
-          <option value="supervisor">Supervisor / Academic mentor</option>
-          <option value="partner">Research partner</option>
-          <option value="funder">Funder / Accelerator</option>
-          <option value="other">Other collaborator</option>
-        </select>
-        <textarea name="message" placeholder="Tell me how you would like to collaborate"></textarea>
-        <button class="btn btn-primary" type="submit">Send Message</button>
-        <p class="form-note">Direct email: [your.email]</p>
-      </form>
-    </div>
-  </div>
-</section>
-
-  </main>  <footer>
-    <div class="container footer-grid">
-      <div>
-        <h3>Architecting the Future</h3>
-        <p>
-          An integrated digital-experimental pipeline for mRNA therapeutics targeting brain metastases.
-        </p>
-        <p style="margin-top: 14px;">Project lead: [Your Name]</p>
-      </div><div>
-    <h3>Links</h3>
-    <div class="footer-links">
-      <a href="mailto:[tetteynissi399@gmail.com]">Contact</a>
-    </div>
-  </div>
-
-  <div>
-    <h3>Sections</h3>
-    <div class="footer-links">
-      <a href="#problem">Problem</a>
-      <a href="#solution">Solution</a>
-      <a href="#mechanism">Stop & Go</a>
-      <a href="#roadmap">Roadmap</a>
-    </div>
-  </div>
-
-  <div>
-    <h3>QR Code</h3>
-    <div class="qr-placeholder">[QR code image]</div>
-  </div>
-</div>
-
-<div class="container copyright">
-  <small>© 2026 [C.O.M.E.T LABS]. All rights reserved.</small>
-  <small>Biomedical research concept · For academic and partnership discussion.</small>
-</div>
-
-  </footer>
-</body>
-  </html>
+    
